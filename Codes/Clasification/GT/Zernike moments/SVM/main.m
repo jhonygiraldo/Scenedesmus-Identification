@@ -1,0 +1,38 @@
+clear all, close all, clc;
+load('../Zernike.mat');
+load('../salidas.mat');
+mkdir('resultadosZernike');
+XZernike([421:500 921:1000 1421:1500 1921:2000],:) = [];
+salidas([421:500 921:1000 1421:1500 1921:2000]) = [];
+kfolds = 10;
+classNumber = 4;
+errorMatriz = [];
+stdMatriz = [];
+confusionMatriz = {};
+caracteristicas = [XZernike salidas];
+folds = crossValidationFolds(caracteristicas,kfolds,classNumber);
+error = [];
+box = [0.01 , 0.1 , 1 , 10 , 100];
+sigma = [0.01 , 0.1 , 1 , 10 , 100];
+%parpool;
+pctRunOnAll warning('off');
+parfor(i=1:kfolds)
+    [trainingSet testSet] = extractTrainingTestSetFold(folds,i);
+    salidasTrainingSet = trainingSet(:,end);
+    salidasTestSet = testSet(:,end);
+    trainingSet(:,end) = [];
+    testSet(:,end) = [];
+    [trainingSet testSet] = zscoreNormalization(trainingSet,testSet);
+    [errorAux confusion] = trainingSVM(trainingSet,testSet,salidasTrainingSet,salidasTestSet,box,sigma);
+    error(:,i) = errorAux;
+    confusionMatriz{i} = confusion;
+end
+mediasError = mean(error');
+mediasError = mediasError';
+stdError = std(error');
+stdError = stdError';
+errorMatriz(:,1) = mediasError;
+stdMatriz(:,1) = stdError;
+save('resultadosZernike/errorMatriz.mat','errorMatriz');
+save('resultadosZernike/stdMatriz.mat','stdMatriz');
+save('resultadosZernike/confusionMatriz.mat','confusionMatriz');
