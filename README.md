@@ -7,6 +7,21 @@ By Jhony‐Heriberto Giraldo‐Zuluaga, Augusto Salazar, German Diez, Alexander 
 
 If you find Scenedesmus-Identification useful in your research, please consider citing:
 
+ ```
+ @Article{giraldo2017automatic,
+  author="Giraldo-Zuluaga, Jhony-Heriberto and Salazar, Augusto and Diez, German and Gomez, Alexander and Mart{\'i}nez, Tatiana and Vargas, J. F. and Pe{\~{n}}uela, Mariana",
+	title="Automatic identification of Scenedesmus polymorphic microalgae from microscopic images",
+	journal="Pattern Analysis and Applications",
+  pages={1--12},
+  year={2017},
+  publisher={Springer}
+}
+```
+
 ## Database
 
+File *Microalgae Database.zip* contains the database used in the paper *Automatic identification of Scenedesmus polymorphic microalgae from microscopic images*. The database is publicly available for academic and research purposes.
+
 ## Requirements: software
+
+The codes used the [Balu Toolbox Matlab](http://dmery.ing.puc.cl/index.php/balu).
